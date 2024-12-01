@@ -9,7 +9,6 @@ import (
 
 func TestReadingLines(t *testing.T) {
 	path, _ := filepath.Abs("../../test/data/file_with_5_lines.txt")
-
 	reader := file_reading.NewReader(path)
 	lines, err := reader.Lines()
 	if err != nil {

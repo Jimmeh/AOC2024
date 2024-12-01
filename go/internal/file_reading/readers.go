@@ -6,7 +6,7 @@ import (
 )
 
 type LineReader interface {
-	Lines() []string
+	Lines() ([]string, error)
 }
 
 type reader struct {
