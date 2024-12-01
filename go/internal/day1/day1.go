@@ -19,12 +19,16 @@ func (l locationChecker) TotalDistance() (int, error) {
 	firstLine := lines[0]
 	lhs, _ := strconv.Atoi(strings.Split(firstLine, "   ")[0])
 	rhs, _ := strconv.Atoi(strings.Split(firstLine, "   ")[1])
-	if lhs != rhs {
-		return 1, nil
-	}
-	return 0, nil
+	return absoluteDifference(lhs, rhs), nil
 }
 
 func CreateLocationChecker(reader file_reading.LineReader) locationChecker {
 	return locationChecker{reader}
+}
+
+func absoluteDifference(a int, b int) int {
+	if a > b {
+		return a - b
+	}
+	return b - a
 }
