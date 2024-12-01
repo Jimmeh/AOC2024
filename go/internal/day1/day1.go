@@ -17,11 +17,11 @@ func (l locationChecker) TotalDistance() (int, error) {
 	if err != nil {
 		return -1, err
 	}
+
 	totalDifference := 0
 	left, right := createSortedArrays(lines)
 	for i, lhs := range left {
-		rhs := right[i]
-		totalDifference += absoluteDifference(lhs, rhs)
+		totalDifference += absoluteDifference(lhs, right[i])
 	}
 	return totalDifference, nil
 }
@@ -31,15 +31,7 @@ func CreateLocationChecker(reader file_reading.LineReader) locationChecker {
 }
 
 func createSortedArrays(lines []string) ([]int, []int) {
-	left := []int{}
-	right := []int{}
-	for _, v := range lines {
-		values := strings.Split(v, "   ")
-		lhs, _ := strconv.Atoi(values[0])
-		rhs, _ := strconv.Atoi(values[1])
-		left = append(left, lhs)
-		right = append(right, rhs)
-	}
+	left, right := parseArrays(lines)
 
 	sort.Slice(left, func(i, j int) bool {
 		return left[i] < left[j]
@@ -49,6 +41,19 @@ func createSortedArrays(lines []string) ([]int, []int) {
 		return right[i] < right[j]
 	})
 
+	return left, right
+}
+
+func parseArrays(lines []string) ([]int, []int) {
+	left := []int{}
+	right := []int{}
+	for _, v := range lines {
+		values := strings.Split(v, "   ")
+		lhs, _ := strconv.Atoi(values[0])
+		rhs, _ := strconv.Atoi(values[1])
+		left = append(left, lhs)
+		right = append(right, rhs)
+	}
 	return left, right
 }
 
