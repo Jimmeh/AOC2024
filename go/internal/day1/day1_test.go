@@ -34,6 +34,7 @@ func TestMultipleEntriesOutOfOrder(t *testing.T) {
 	Case(t, "Multiple matching enties out of order", []string{"2   2", "1   1", "3   3"}, 0)
 	Case(t, "Multiple matching enties out of order but paired correctly", []string{"2   3", "1   2", "3   4"}, 3)
 	Case(t, "Multiple matching enties out of order not paired correctly", []string{"2   6", "1   4", "3   2"}, 6)
+	Case(t, "Example from problem", []string{"3   4", "4   3", "2   5", "1   3", "3   9", "3   3"}, 11)
 }
 
 func Case(t *testing.T, description string, input []string, expected int) {
