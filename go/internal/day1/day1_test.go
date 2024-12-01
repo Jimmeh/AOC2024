@@ -30,6 +30,12 @@ func TestMultipleEntriesInOrder(t *testing.T) {
 	Case(t, "Multiple entries, all far apart, first larger than second", []string{"50   11", "54   45"}, 48)
 }
 
+func TestMultipleEntriesOutOfOrder(t *testing.T) {
+	Case(t, "Multiple matching enties out of order", []string{"2   2", "1   1", "3   3"}, 0)
+	Case(t, "Multiple matching enties out of order but paired correctly", []string{"2   3", "1   2", "3   4"}, 3)
+	Case(t, "Multiple matching enties out of order not paired correctly", []string{"2   6", "1   4", "3   2"}, 6)
+}
+
 func Case(t *testing.T, description string, input []string, expected int) {
 	reader := TestLineReader{input}
 	locationChecker := day1.CreateLocationChecker(reader)
