@@ -17,6 +17,7 @@ func (r TestLineReader) Lines() ([]string, error) {
 func TestSingleEntry(t *testing.T) {
 	Case(t, "Single matching entry", []string{"1   1"}, 0)
 	Case(t, "Single entry, first smaller than second", []string{"1   2"}, 1)
+	Case(t, "Single entry, first larger than second", []string{"2   1"}, 1)
 }
 
 func Case(t *testing.T, description string, input []string, expected int) {

@@ -19,7 +19,7 @@ func (l locationChecker) TotalDistance() (int, error) {
 	firstLine := lines[0]
 	lhs, _ := strconv.Atoi(strings.Split(firstLine, "   ")[0])
 	rhs, _ := strconv.Atoi(strings.Split(firstLine, "   ")[1])
-	if lhs < rhs {
+	if lhs != rhs {
 		return 1, nil
 	}
 	return 0, nil
