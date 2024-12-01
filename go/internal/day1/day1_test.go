@@ -24,7 +24,10 @@ func TestSingleEntry(t *testing.T) {
 
 func TestMultipleEntriesInOrder(t *testing.T) {
 	Case(t, "Multiple matching entries", []string{"1   1", "2   2"}, 0)
-	Case(t, "Multiple entries, all 1 apart", []string{"1   2", "2   3"}, 2)
+	Case(t, "Multiple entries, all 1 apart, first smaller than second", []string{"1   2", "2   3"}, 2)
+	Case(t, "Multiple entries, all 1 apart, first larger than second", []string{"2   1", "3   2"}, 2)
+	Case(t, "Multiple entries, all far apart, first smaller than second", []string{"1   41", "5   50"}, 85)
+	Case(t, "Multiple entries, all far apart, first larger than second", []string{"50   11", "54   45"}, 48)
 }
 
 func Case(t *testing.T, description string, input []string, expected int) {
