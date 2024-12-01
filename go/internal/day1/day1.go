@@ -30,6 +30,20 @@ func (l locationChecker) TotalDistance() int {
 	return totalDifference
 }
 
+func (l locationChecker) TotalSimilarity() int {
+	totalSimilarity := 0
+	for _, lhs := range l.left {
+		count := 0
+		for _, rhs := range l.right {
+			if lhs == rhs {
+				count++
+			}
+		}
+		totalSimilarity += lhs * count
+	}
+	return totalSimilarity
+}
+
 func createSortedArrays(lines []string) ([]int, []int) {
 	left, right := parseArrays(lines)
 

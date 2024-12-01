@@ -17,7 +17,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error: %s", err)
 	}
-	result := checker.TotalDistance()
-	fmt.Printf("Total distance when ordered is %d", result)
+	distance := checker.TotalDistance()
+	similarity := checker.TotalSimilarity()
+	fmt.Printf("Total distance when ordered is %d", distance)
+	fmt.Println()
+	fmt.Printf("Total similarity score is %d", similarity)
 	fmt.Println()
 }
