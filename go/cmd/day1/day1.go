@@ -13,11 +13,11 @@ func main() {
 	filepath := os.Args[1]
 	reader := file_reading.NewReader(filepath)
 
-	checker := day1.CreateLocationChecker(reader)
-	result, err := checker.TotalDistance()
+	checker, err := day1.CreateLocationChecker(reader)
 	if err != nil {
 		log.Fatalf("Error: %s", err)
 	}
+	result := checker.TotalDistance()
 	fmt.Printf("Total distance when ordered is %d", result)
 	fmt.Println()
 }

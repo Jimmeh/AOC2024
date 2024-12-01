@@ -8,26 +8,26 @@ import (
 	"github.com/Jimmeh/AOC2024/go/internal/file_reading"
 )
 
-type locationChecker struct {
-	reader file_reading.LineReader
-}
-
-func (l locationChecker) TotalDistance() (int, error) {
-	lines, err := l.reader.Lines()
+func CreateLocationChecker(reader file_reading.LineReader) (locationChecker, error) {
+	lines, err := reader.Lines()
 	if err != nil {
-		return -1, err
+		return locationChecker{}, err
 	}
-
-	totalDifference := 0
 	left, right := createSortedArrays(lines)
-	for i, lhs := range left {
-		totalDifference += absoluteDifference(lhs, right[i])
-	}
-	return totalDifference, nil
+	return locationChecker{left, right}, nil
 }
 
-func CreateLocationChecker(reader file_reading.LineReader) locationChecker {
-	return locationChecker{reader}
+type locationChecker struct {
+	left  []int
+	right []int
+}
+
+func (l locationChecker) TotalDistance() int {
+	totalDifference := 0
+	for i, lhs := range l.left {
+		totalDifference += absoluteDifference(lhs, l.right[i])
+	}
+	return totalDifference
 }
 
 func createSortedArrays(lines []string) ([]int, []int) {

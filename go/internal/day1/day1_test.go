@@ -39,8 +39,8 @@ func TestMultipleEntriesOutOfOrder(t *testing.T) {
 
 func Case(t *testing.T, description string, input []string, expected int) {
 	reader := TestLineReader{input}
-	locationChecker := day1.CreateLocationChecker(reader)
-	actual, _ := locationChecker.TotalDistance()
+	locationChecker, _ := day1.CreateLocationChecker(reader)
+	actual := locationChecker.TotalDistance()
 	if actual != expected {
 		t.Errorf("%s: expected %d, got %d", description, expected, actual)
 	}
