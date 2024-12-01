@@ -14,14 +14,15 @@ func (r TestLineReader) Lines() ([]string, error) {
 	return r.lines, nil
 }
 
-func TestMatchingList(t *testing.T) {
+func TestSingleEntry(t *testing.T) {
+	Case(t, "Single matching entry", []string{"1   1"}, 0)
+}
+
+func Case(t *testing.T, description string, input []string, expected int) {
 	reader := TestLineReader{[]string{"1   1"}}
 	locationChecker := day1.CreateLocationChecker(reader)
-
-	expected := 0
 	actual := locationChecker.TotalDistance()
-
 	if actual != expected {
-		t.Errorf("Expected totalDistance of %d, got %d", expected, actual)
+		t.Errorf("%s: expected %d, got %d", description, expected, actual)
 	}
 }
