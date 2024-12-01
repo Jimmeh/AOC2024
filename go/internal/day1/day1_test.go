@@ -19,6 +19,7 @@ func TestSingleEntry(t *testing.T) {
 	Case(t, "Single entry, first smaller than second", []string{"1   2"}, 1)
 	Case(t, "Single entry, first larger than second", []string{"2   1"}, 1)
 	Case(t, "Single entry, first much smaller than second", []string{"1   50"}, 49)
+	Case(t, "Single entry, first much larger than second", []string{"50   1"}, 49)
 }
 
 func Case(t *testing.T, description string, input []string, expected int) {
