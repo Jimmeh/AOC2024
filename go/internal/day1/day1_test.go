@@ -22,6 +22,11 @@ func TestSingleEntry(t *testing.T) {
 	Case(t, "Single entry, first much larger than second", []string{"50   1"}, 49)
 }
 
+func TestMultipleEntriesInOrder(t *testing.T) {
+	Case(t, "Multiple matching entries", []string{"1   1", "2   2"}, 0)
+	Case(t, "Multiple entries, all 1 apart", []string{"1   2", "2   3"}, 2)
+}
+
 func Case(t *testing.T, description string, input []string, expected int) {
 	reader := TestLineReader{input}
 	locationChecker := day1.CreateLocationChecker(reader)
