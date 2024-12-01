@@ -16,12 +16,13 @@ func (r TestLineReader) Lines() ([]string, error) {
 
 func TestSingleEntry(t *testing.T) {
 	Case(t, "Single matching entry", []string{"1   1"}, 0)
+	Case(t, "Single entry, first smaller than second", []string{"1   2"}, 1)
 }
 
 func Case(t *testing.T, description string, input []string, expected int) {
-	reader := TestLineReader{[]string{"1   1"}}
+	reader := TestLineReader{input}
 	locationChecker := day1.CreateLocationChecker(reader)
-	actual := locationChecker.TotalDistance()
+	actual, _ := locationChecker.TotalDistance()
 	if actual != expected {
 		t.Errorf("%s: expected %d, got %d", description, expected, actual)
 	}
