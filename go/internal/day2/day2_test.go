@@ -19,6 +19,8 @@ func TestSingleLine(t *testing.T) {
 
 func TestMultipleLines(t *testing.T) {
 	Case(t, "Multiple safe lines, always increasing", []string{"1 2 3 4 5", "6 7 8 9 10"}, 2)
+	Case(t, "Multiple safe lines, always decreasing", []string{"10 9 8 7 6", "5 4 3 2 1"}, 2)
+	Case(t, "Multiple lines, one safe, one not (increasing)", []string{"2 4 6 8 10", "1 5 7 9 10"}, 1)
 }
 
 func Case(t *testing.T, description string, input []string, expected int) {
