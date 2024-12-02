@@ -31,7 +31,7 @@ func (c reportSafetyChecker) TotalSafeReports() (int, error) {
 		if i == 0 {
 			continue
 		}
-		reportType = determineReportType(report[i-1], report[i])
+		reportType = determineReportType(reportType, report[i-1], report[i])
 		if reportType == Unsafe {
 			return 0, nil
 		}
@@ -39,14 +39,36 @@ func (c reportSafetyChecker) TotalSafeReports() (int, error) {
 	return 1, nil
 }
 
-func determineReportType(v1, v2 int) int {
+func determineReportType(reportType, v1, v2 int) int {
+	result := Undetermined
 	if v1 < v2 {
-		return Increasing
+		result = Increasing
 	}
 	if v1 > v2 {
-		return Decreasing
+		result = Decreasing
 	}
-	return Unsafe
+	safe := isSafeChange(v1, v2) &&
+		hasNotChangedDirection(reportType, result) &&
+		result != Undetermined
+
+	if !safe {
+		return Unsafe
+	}
+	return result
+}
+
+func isSafeChange(v1, v2 int) bool {
+	change := 0
+	if v1 > v2 {
+		change = v1 - v2
+	} else {
+		change = v2 - v1
+	}
+	return change <= 3
+}
+
+func hasNotChangedDirection(old, new int) bool {
+	return old == Undetermined || new == old
 }
 
 const (

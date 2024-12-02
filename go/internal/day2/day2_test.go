@@ -10,6 +10,10 @@ import (
 func TestSingleLine(t *testing.T) {
 	Case(t, "Single safe report, always increasing by 1", []string{"1 2 3 4 5"}, 1)
 	Case(t, "Single safe report, always decreasing by 1", []string{"5 4 3 2 1"}, 1)
+	Case(t, "Single unsafe report, always increasing with leap", []string{"1 2 10 11 12"}, 0)
+	Case(t, "Single unsafe report, always decreasing with leap", []string{"12 11 10 2 1"}, 0)
+	Case(t, "Single unsafe report, changes direction increase to decrease", []string{"1 2 3 2 1"}, 0)
+	Case(t, "Single unsafe report, changes direction decrease to increase", []string{"3 2 1 2 3"}, 0)
 	Case(t, "Single unsafe report, always 1", []string{"1 1 1 1 1"}, 0)
 }
 
