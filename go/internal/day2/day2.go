@@ -7,34 +7,44 @@ import (
 	"github.com/Jimmeh/AOC2024/go/internal/file_reading"
 )
 
-func CreateReportSafetyChecker(reader file_reading.LineReader) reportSafetyChecker {
-	return reportSafetyChecker{reader}
+func CreateReportSafetyChecker(reader file_reading.LineReader) (reportSafetyChecker, error) {
+	reports, err := parseReports(reader)
+	if err != nil {
+		return reportSafetyChecker{}, err
+	}
+	return reportSafetyChecker{reports}, nil
 }
 
 type reportSafetyChecker struct {
-	reader file_reading.LineReader
+	reports [][]int
 }
 
-func (c reportSafetyChecker) TotalSafeReports() (int, error) {
-	lines, err := c.reader.Lines()
+func parseReports(reader file_reading.LineReader) ([][]int, error) {
+	lines, err := reader.Lines()
 	if err != nil {
-		return -1, err
+		return nil, err
 	}
-	safeReports := 0
+	reports := [][]int{}
 	for _, line := range lines {
-
 		report := []int{}
 		for _, entry := range strings.Split(line, " ") {
 			num, _ := strconv.Atoi(entry)
 			report = append(report, num)
-
 		}
+		reports = append(reports, report)
+	}
+	return reports, nil
+}
 
+func (c reportSafetyChecker) TotalSafeReports() int {
+
+	safeReports := 0
+	for _, report := range c.reports {
 		if isSafe(report) {
 			safeReports++
 		}
 	}
-	return safeReports, nil
+	return safeReports
 }
 
 func isSafe(report []int) bool {

@@ -28,8 +28,8 @@ func TestMultipleLines(t *testing.T) {
 
 func Case(t *testing.T, description string, input []string, expected int) {
 	reader := helpers.TestLineReader{Data: input}
-	checker := day2.CreateReportSafetyChecker(reader)
-	actual, _ := checker.TotalSafeReports()
+	checker, _ := day2.CreateReportSafetyChecker(reader)
+	actual := checker.TotalSafeReports()
 	if actual != expected {
 		t.Errorf("%s: expected %d, got %d", description, expected, actual)
 	}
