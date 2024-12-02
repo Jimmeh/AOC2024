@@ -37,7 +37,6 @@ func parseReports(reader file_reading.LineReader) ([][]int, error) {
 }
 
 func (c reportSafetyChecker) TotalSafeReports() int {
-
 	safeReports := 0
 	for _, report := range c.reports {
 		if isSafe(report) {
@@ -47,9 +46,31 @@ func (c reportSafetyChecker) TotalSafeReports() int {
 	return safeReports
 }
 
+func (c reportSafetyChecker) TotalNearlySafeReports() int {
+	safeReports := 0
+	for _, report := range c.reports {
+		if isNearlySafe(report) {
+			safeReports++
+		}
+	}
+	return safeReports
+}
+
+func isNearlySafe(report []int) bool {
+	failIndex := getFailIndex(report)
+	return failIndex == NoFailure ||
+		getFailIndex(removeIndex(report, failIndex)) == NoFailure
+}
+
 func isSafe(report []int) bool {
+	return getFailIndex(report) == NoFailure
+}
+
+const NoFailure = -1
+
+func getFailIndex(report []int) int {
 	reportType := Undetermined
-	failIndex := -1
+	failIndex := NoFailure
 	for i := range report {
 		if i == 0 {
 			continue
@@ -60,7 +81,13 @@ func isSafe(report []int) bool {
 			break
 		}
 	}
-	return failIndex == -1
+	return failIndex
+}
+
+func removeIndex(s []int, index int) []int {
+	ret := make([]int, 0)
+	ret = append(ret, s[:index]...)
+	return append(ret, s[index+1:]...)
 }
 
 func determineReportType(reportType, v1, v2 int) int {
