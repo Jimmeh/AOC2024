@@ -59,7 +59,9 @@ func (c reportSafetyChecker) TotalNearlySafeReports() int {
 func isNearlySafe(report []int) bool {
 	failIndex := getFailIndex(report)
 	return failIndex == NoFailure ||
-		getFailIndex(removeIndex(report, failIndex)) == NoFailure
+		getFailIndex(removeIndex(report, failIndex)) == NoFailure ||
+		getFailIndex(removeIndex(report, 0)) == NoFailure
+
 }
 
 func isSafe(report []int) bool {

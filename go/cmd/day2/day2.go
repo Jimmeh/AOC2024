@@ -19,7 +19,10 @@ func main() {
 	}
 
 	totalSafeReports := checker.TotalSafeReports()
+	totalNearlySafeReports := checker.TotalNearlySafeReports()
 
 	fmt.Printf("Total safe reports is %d", totalSafeReports)
+	fmt.Println()
+	fmt.Printf("Total nearly safe reports is %d", totalNearlySafeReports)
 	fmt.Println()
 }
