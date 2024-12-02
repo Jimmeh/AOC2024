@@ -4,15 +4,8 @@ import (
 	"testing"
 
 	"github.com/Jimmeh/AOC2024/go/internal/day1"
+	"github.com/Jimmeh/AOC2024/go/test/helpers"
 )
-
-type TestLineReader struct {
-	lines []string
-}
-
-func (r TestLineReader) Lines() ([]string, error) {
-	return r.lines, nil
-}
 
 func TestSingleEntry(t *testing.T) {
 	TotalDistanceCase(t, "Single matching entry", []string{"1   1"}, 0)
@@ -42,7 +35,7 @@ func TestSimilarityScore(t *testing.T) {
 }
 
 func TotalDistanceCase(t *testing.T, description string, input []string, expected int) {
-	reader := TestLineReader{input}
+	reader := helpers.TestLineReader{Data: input}
 	locationChecker, _ := day1.CreateLocationChecker(reader)
 	actual := locationChecker.TotalDistance()
 	if actual != expected {
@@ -51,7 +44,7 @@ func TotalDistanceCase(t *testing.T, description string, input []string, expecte
 }
 
 func SimilarityScoreCase(t *testing.T, description string, input []string, expected int) {
-	reader := TestLineReader{input}
+	reader := helpers.TestLineReader{Data: input}
 	locationChecker, _ := day1.CreateLocationChecker(reader)
 	actual := locationChecker.TotalSimilarity()
 	if actual != expected {
