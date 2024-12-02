@@ -49,16 +49,18 @@ func (c reportSafetyChecker) TotalSafeReports() int {
 
 func isSafe(report []int) bool {
 	reportType := Undetermined
+	failIndex := -1
 	for i := range report {
 		if i == 0 {
 			continue
 		}
 		reportType = determineReportType(reportType, report[i-1], report[i])
 		if reportType == Unsafe {
-			return false
+			failIndex = i
+			break
 		}
 	}
-	return true
+	return failIndex == -1
 }
 
 func determineReportType(reportType, v1, v2 int) int {
