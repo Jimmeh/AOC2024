@@ -17,6 +17,10 @@ func TestSingleLine(t *testing.T) {
 	Case(t, "Single unsafe report, always 1", []string{"1 1 1 1 1"}, 0)
 }
 
+func TestMultipleLines(t *testing.T) {
+	Case(t, "Multiple safe lines, always increasing", []string{"1 2 3 4 5", "6 7 8 9 10"}, 2)
+}
+
 func Case(t *testing.T, description string, input []string, expected int) {
 	reader := helpers.TestLineReader{Data: input}
 	checker := day2.CreateReportSafetyChecker(reader)

@@ -20,12 +20,24 @@ func (c reportSafetyChecker) TotalSafeReports() (int, error) {
 	if err != nil {
 		return -1, err
 	}
-	report := []int{}
-	for _, entry := range strings.Split(lines[0], " ") {
-		num, _ := strconv.Atoi(entry)
-		report = append(report, num)
-	}
+	safeReports := 0
+	for _, line := range lines {
 
+		report := []int{}
+		for _, entry := range strings.Split(line, " ") {
+			num, _ := strconv.Atoi(entry)
+			report = append(report, num)
+
+		}
+
+		if isSafe(report) {
+			safeReports++
+		}
+	}
+	return safeReports, nil
+}
+
+func isSafe(report []int) bool {
 	reportType := Undetermined
 	for i := range report {
 		if i == 0 {
@@ -33,10 +45,10 @@ func (c reportSafetyChecker) TotalSafeReports() (int, error) {
 		}
 		reportType = determineReportType(reportType, report[i-1], report[i])
 		if reportType == Unsafe {
-			return 0, nil
+			return false
 		}
 	}
-	return 1, nil
+	return true
 }
 
 func determineReportType(reportType, v1, v2 int) int {
