@@ -8,7 +8,8 @@ import (
 )
 
 func TestSingleLine(t *testing.T) {
-	Case(t, "Single safe report, always incrementing by 1", []string{"1 2 3 4 5"}, 1)
+	Case(t, "Single safe report, always increasing by 1", []string{"1 2 3 4 5"}, 1)
+	Case(t, "Single safe report, always decreasing by 1", []string{"5 4 3 2 1"}, 1)
 	Case(t, "Single unsafe report, always 1", []string{"1 1 1 1 1"}, 0)
 }
 
