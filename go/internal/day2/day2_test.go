@@ -27,6 +27,14 @@ func TestMultipleLines(t *testing.T) {
 }
 
 func TestNearlySafeReports(t *testing.T) {
+	NearlySafeCase(t, "First item removed makes safe (increasing)", []string{"1 5 6 7 8"}, 1)
+	NearlySafeCase(t, "Duplicate number removal makes safe (increasing)", []string{"1 2 2 3 4"}, 1)
+	NearlySafeCase(t, "Last item removal makes safe (increasing)", []string{"1 2 3 4 10"}, 1)
+	NearlySafeCase(t, "First item removed makes safe (decreasing)", []string{"10 5 4 3 2"}, 1)
+	NearlySafeCase(t, "Duplicate number removal makes safe (decreasing)", []string{"10 10 9 8 7"}, 1)
+	NearlySafeCase(t, "Last item removal makes safe (decreasing)", []string{"10 9 8 7 1"}, 1)
+	NearlySafeCase(t, "Remove direction change pivot makes safe", []string{"1 9 7 5 4"}, 1)
+	NearlySafeCase(t, "Remove direction change pivot makes safe", []string{"10 11 9 8 7"}, 1)
 	NearlySafeCase(t, "Example from problem", []string{"7 6 4 2 1", "1 2 7 8 9", "9 7 6 2 1", "1 3 2 4 5", "8 6 4 4 1", "1 3 6 7 9"}, 4)
 }
 
