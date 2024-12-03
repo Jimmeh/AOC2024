@@ -34,3 +34,11 @@ func (r reader) Lines() ([]string, error) {
 	}
 	return lines, scanner.Err()
 }
+
+func (r reader) Text() (string, error) {
+	bytes, err := os.ReadFile(r.path)
+	if err != nil {
+		return "", err
+	}
+	return string(bytes), nil
+}

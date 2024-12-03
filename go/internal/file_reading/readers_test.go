@@ -18,3 +18,15 @@ func TestReadingLines(t *testing.T) {
 		t.Errorf("Expected 5 lines, got %d", len(lines))
 	}
 }
+
+func TestReadingFullText(t *testing.T) {
+	path, _ := filepath.Abs("../../test/data/file_with_5_lines.txt")
+	reader := file_reading.NewReader(path)
+	text, err := reader.Text()
+	if err != nil {
+		t.Errorf("Error reading file: %s", err)
+	}
+	if text != "0\n1\n2\n3\n4" {
+		t.Errorf("expected 5 lines of indices")
+	}
+}

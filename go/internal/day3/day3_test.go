@@ -19,6 +19,20 @@ func TestInstructions(t *testing.T) {
 	Case(t, "Single instruction with 10x10=100", "mul(10,10)", 100)
 	Case(t, "Single instruction with 100x100=10000", "mul(100,100)", 10000)
 	Case(t, "Instruction can't have more than 3 digit numbers", "mul(1000,100)", 0)
+	Case(t, "Example from problem", "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))", 161)
+}
+
+func TestWithConditions(t *testing.T) {
+	CaseWithConditions(t, "Example from problem", "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))", 48)
+}
+
+func CaseWithConditions(t *testing.T, description string, input string, expected int) {
+	reader := helpers.TestTextReader{Data: input}
+	calculator, _ := day3.CreateInstructionCalculator(reader)
+	actual := calculator.CalculateWithConditions()
+	if expected != actual {
+		t.Errorf("%s: expected %d, got %d", description, expected, actual)
+	}
 }
 
 func Case(t *testing.T, description string, input string, expected int) {

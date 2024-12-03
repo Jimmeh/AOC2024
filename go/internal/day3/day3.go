@@ -20,9 +20,24 @@ type instructionCalculator struct {
 	data string
 }
 
+func (c instructionCalculator) CalculateWithConditions() int {
+
+	splitByDont := strings.Split("do()"+c.data, "don't()")
+	result := 0
+	for _, section := range splitByDont {
+		enabledPart := strings.SplitN(section, "do()", 2)[1]
+		result += sumOfSection(enabledPart)
+	}
+	return result
+}
+
 func (c instructionCalculator) Calculate() int {
+	return sumOfSection(c.data)
+}
+
+func sumOfSection(section string) int {
 	regex, _ := regexp.Compile(`mul\(\d{1,3},\d{1,3}\)`)
-	matches := regex.FindAllString(c.data, -1)
+	matches := regex.FindAllString(section, -1)
 	result := 0
 	for _, match := range matches {
 		a, b := getNumbers(match)
