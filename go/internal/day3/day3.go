@@ -21,7 +21,6 @@ type instructionCalculator struct {
 }
 
 func (c instructionCalculator) CalculateWithConditions() int {
-
 	splitByDont := strings.Split("do()"+c.data, "don't()")
 	result := 0
 	for _, section := range splitByDont {
