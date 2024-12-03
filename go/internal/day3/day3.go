@@ -19,7 +19,7 @@ type instructionCalculator struct {
 }
 
 func (c instructionCalculator) Calculate() int {
-	regex, _ := regexp.Compile("mul\\(1,1\\)")
+	regex, _ := regexp.Compile(`mul\(1,1\)`)
 	if regex.Match([]byte(c.data)) {
 		return 1
 	}
