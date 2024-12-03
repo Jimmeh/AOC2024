@@ -17,6 +17,8 @@ func TestInstructions(t *testing.T) {
 	Case(t, "Instruction in the middle of stuff", "afhijiakfd adaslfmul(1,2)asdfijoas", 2)
 	Case(t, "Two instructions 1x2 + 1x2 = 4", "mul(1,2)mul(1,2)", 4)
 	Case(t, "Single instruction with 10x10=100", "mul(10,10)", 100)
+	Case(t, "Single instruction with 100x100=10000", "mul(100,100)", 10000)
+	Case(t, "Instruction can't have more than 3 digit numbers", "mul(1000,100)", 0)
 }
 
 func Case(t *testing.T, description string, input string, expected int) {

@@ -21,7 +21,7 @@ type instructionCalculator struct {
 }
 
 func (c instructionCalculator) Calculate() int {
-	regex, _ := regexp.Compile(`mul\(\d,\d\)`)
+	regex, _ := regexp.Compile(`mul\(\d{1,3},\d{1,3}\)`)
 	matches := regex.FindAllString(c.data, -1)
 	result := 0
 	for _, match := range matches {
