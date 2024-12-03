@@ -25,11 +25,9 @@ func (c instructionCalculator) CalculateWithConditions() int {
 	result := 0
 	for _, section := range splitByDont {
 		splitByDo := strings.SplitN(section, "do()", 2)
-		if len(splitByDo) == 1 {
-			continue
+		if len(splitByDo) == 2 {
+			result += sumOfSection(splitByDo[1])
 		}
-		enabledPart := splitByDo[1]
-		result += sumOfSection(enabledPart)
 	}
 	return result
 }
