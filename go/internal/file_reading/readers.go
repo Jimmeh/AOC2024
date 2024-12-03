@@ -9,6 +9,10 @@ type LineReader interface {
 	Lines() ([]string, error)
 }
 
+type TextReader interface {
+	Text() (string, error)
+}
+
 type reader struct {
 	path string
 }
