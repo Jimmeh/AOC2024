@@ -19,7 +19,10 @@ func main() {
 	}
 
 	instructionTotal := calculator.Calculate()
+	withConditionsTotal := calculator.CalculateWithConditions()
 
 	fmt.Printf("Sum of all instructions is %d", instructionTotal)
+	fmt.Println()
+	fmt.Printf("Sum of all instructions with conditions is %d", withConditionsTotal)
 	fmt.Println()
 }
