@@ -23,19 +23,17 @@ type instructionCalculator struct {
 func (c instructionCalculator) Calculate() int {
 	regex, _ := regexp.Compile(`mul\(\d,\d\)`)
 	matches := regex.FindAllString(c.data, -1)
+	result := 0
 	for _, match := range matches {
 		startTrimmed := strings.Trim(match, "mul(")
 		commaSeparatedOperands := strings.Trim(startTrimmed, ")")
 		numbers := strings.Split(commaSeparatedOperands, ",")
-		result := 1
+		instructionResult := 1
 		for _, num := range numbers {
 			i, _ := strconv.Atoi(num)
-			result *= i
+			instructionResult *= i
 		}
-		return result
+		result += instructionResult
 	}
-	if len(matches) > 0 {
-		return 1
-	}
-	return 0
+	return result
 }
