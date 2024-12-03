@@ -25,15 +25,17 @@ func (c instructionCalculator) Calculate() int {
 	matches := regex.FindAllString(c.data, -1)
 	result := 0
 	for _, match := range matches {
-		startTrimmed := strings.Trim(match, "mul(")
-		commaSeparatedOperands := strings.Trim(startTrimmed, ")")
-		numbers := strings.Split(commaSeparatedOperands, ",")
-		instructionResult := 1
-		for _, num := range numbers {
-			i, _ := strconv.Atoi(num)
-			instructionResult *= i
-		}
-		result += instructionResult
+		a, b := getNumbers(match)
+		result += a * b
 	}
 	return result
+}
+
+func getNumbers(instruction string) (int, int) {
+	startTrimmed := strings.Trim(instruction, "mul(")
+	commaSeparatedOperands := strings.Trim(startTrimmed, ")")
+	numbers := strings.Split(commaSeparatedOperands, ",")
+	a, _ := strconv.Atoi(numbers[0])
+	b, _ := strconv.Atoi(numbers[1])
+	return a, b
 }
