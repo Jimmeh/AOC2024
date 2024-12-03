@@ -10,6 +10,7 @@ import (
 func TestSingleInstruction(t *testing.T) {
 	Case(t, "Single instruction with single digit operands", "mul(1,1)", 1)
 	Case(t, "No instruction", "", 0)
+	Case(t, "No instruction but a lot of chars", "sadfjhasdjfhakjbsdaihdf3829uohanvcval;dsfjw9u3ru09gtsv", 0)
 }
 
 func Case(t *testing.T, description string, input string, expected int) {
