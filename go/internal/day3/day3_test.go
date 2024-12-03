@@ -15,6 +15,7 @@ func TestInstructions(t *testing.T) {
 	Case(t, "Nearly an instruction (negative number)", "mul(-1,2)", 0)
 	Case(t, "Nearly an instruction (spaces)", "mul(1 ,2)", 0)
 	Case(t, "Instruction in the middle of stuff", "afhijiakfd adaslfmul(1,2)asdfijoas", 2)
+	Case(t, "Two instructions 1x2 + 1x2 = 4", "mul(1,2)mul(1,2)", 4)
 }
 
 func Case(t *testing.T, description string, input string, expected int) {
