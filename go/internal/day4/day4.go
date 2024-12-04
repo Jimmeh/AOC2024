@@ -57,8 +57,7 @@ func forwardMatches(sequence []byte, word string) int {
 
 func getSequences(grid [][]byte) [][]byte {
 	rows := grid
-	columns := getColumns(grid)
-	return append(rows, columns...)
+	return append(append(rows, getColumns(grid)...), getDiagonals(grid)...)
 }
 
 func getColumns(grid [][]byte) [][]byte {
@@ -71,6 +70,21 @@ func getColumns(grid [][]byte) [][]byte {
 		cols = append(cols, col)
 	}
 	return cols
+}
+
+func getDiagonals(grid [][]byte) [][]byte {
+	diags := [][]byte{}
+	for i := range grid {
+		diag := []byte{}
+		for j := 0; j <= len(grid)-i-1; j++ {
+			if j >= len(grid[i+j]) {
+				break
+			}
+			diag = append(diag, grid[i+j][j])
+		}
+		diags = append(diags, diag)
+	}
+	return diags
 }
 
 func reverse(s string) string {
