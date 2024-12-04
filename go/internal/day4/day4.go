@@ -21,23 +21,32 @@ type wordSearcher struct {
 func (w wordSearcher) Find(word string) int {
 	result := 0
 	for _, sequence := range getSequences(w.grid) {
-		matched := 0
-		for i, char := range sequence {
-			if matched == 0 && len(word) > len(sequence)-i {
-				break
-			}
-			if char == word[matched] {
-				matched++
-			}
+		result += forwardMatches(sequence, word)
+	}
+	return result
+}
+
+func forwardMatches(sequence []byte, word string) int {
+	result := 0
+	matched := 0
+	for i, char := range sequence {
+		if matched == 0 && len(word) > len(sequence)-i {
+			break
+		}
+		if char == word[matched] {
+			matched++
 			if matched == len(word) {
 				matched = 0
 				result++
 			}
+		} else {
+			matched = 0
 		}
 	}
 	return result
 }
 
 func getSequences(grid [][]byte) [][]byte {
-	return grid
+	rows := grid
+	return rows
 }
