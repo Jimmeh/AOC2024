@@ -22,8 +22,13 @@ func (w wordSearcher) Find(word string) int {
 	result := 0
 	for _, sequence := range getSequences(w.grid) {
 		result += forwardMatches(sequence, word)
+		result += 
 	}
 	return result
+}
+
+func backwardMatches(sequence []byte, word string) int {
+	return forwardMatches(sequence, reverse(word))	
 }
 
 func forwardMatches(sequence []byte, word string) int {
@@ -49,4 +54,12 @@ func forwardMatches(sequence []byte, word string) int {
 func getSequences(grid [][]byte) [][]byte {
 	rows := grid
 	return rows
+}
+
+func reverse(s string) string {
+	rns := []rune(s)
+	for i, j := 0, len(rns)-1; i < j; i, j = i+1, j-1 {
+		rns[i], rns[j] = rns[j], rns[i]
+	}
+	return string(rns)
 }
