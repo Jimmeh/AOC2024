@@ -1,6 +1,8 @@
 package day4
 
 import (
+	"slices"
+
 	"github.com/Jimmeh/AOC2024/go/internal/file_reading"
 )
 
@@ -30,7 +32,7 @@ func (w wordSearcher) Find(word string) int {
 }
 
 func backwardMatches(sequence []byte, word string) int {
-	return forwardMatches(sequence, reverse(word))
+	return forwardMatches(sequence, reverseString(word))
 }
 
 func forwardMatches(sequence []byte, word string) int {
@@ -57,7 +59,14 @@ func forwardMatches(sequence []byte, word string) int {
 
 func getSequences(grid [][]byte) [][]byte {
 	rows := grid
-	return append(append(rows, getColumns(grid)...), getDiagonals(grid)...)
+	cols := getColumns(grid)
+	rightDiags := getDiagonals(grid)
+	reversedGrid := [][]byte{}
+	for _, row := range grid {
+		reversedGrid = append(reversedGrid, reverseBytes(row))
+	}
+	leftDiags := getDiagonals(reversedGrid)
+	return slices.Concat(rows, cols, rightDiags, leftDiags)
 }
 
 func getColumns(grid [][]byte) [][]byte {
@@ -76,7 +85,7 @@ func getDiagonals(grid [][]byte) [][]byte {
 	diags := [][]byte{}
 	for i := range grid {
 		diag := []byte{}
-		for j := 0; j <= len(grid)-i-1; j++ {
+		for j := 0; j < len(grid)-i; j++ {
 			if j >= len(grid[i+j]) {
 				break
 			}
@@ -84,10 +93,31 @@ func getDiagonals(grid [][]byte) [][]byte {
 		}
 		diags = append(diags, diag)
 	}
+	for i := range grid[0] {
+		if i == 0 {
+			continue
+		}
+		diag := []byte{}
+		for j := 0; j < len(grid[0])-i; j++ {
+			if j >= len(grid) {
+				break
+			}
+			diag = append(diag, grid[j][i+j])
+		}
+		diags = append(diags, diag)
+	}
 	return diags
 }
 
-func reverse(s string) string {
+func reverseBytes(b []byte) []byte {
+	result := []byte(b)
+	for i, j := 0, len(result)-1; i < j; i, j = i+1, j-1 {
+		result[i], result[j] = result[j], result[i]
+	}
+	return result
+}
+
+func reverseString(s string) string {
 	rns := []rune(s)
 	for i, j := 0, len(rns)-1; i < j; i, j = i+1, j-1 {
 		rns[i], rns[j] = rns[j], rns[i]

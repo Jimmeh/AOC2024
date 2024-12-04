@@ -19,11 +19,13 @@ func TestHorizontalMatches(t *testing.T) {
 
 func TestColumnMatches(t *testing.T) {
 	XmasMatchesCase(t, "Vertical Exact match", []string{"X", "M", "A", "S"}, 1)
-	XmasMatchesCase(t, "Vertical matches", []string{"XXXX", "MMMM", "AAAA", "SSSS"}, 5)
+	XmasMatchesCase(t, "Vertical matches", []string{"XXXX", "MMMM", "AAAA", "SSSS"}, 6)
 }
 
 func TestDiagMatches(t *testing.T) {
 	XmasMatchesCase(t, "Square grid exact match", []string{"XABC", "AMBC", "ABAC", "ABCS"}, 1)
+	XmasMatchesCase(t, "Assymetric grid exact match right", []string{"AXABC", "AAMBC", "AABAC", "AABCS"}, 1)
+	XmasMatchesCase(t, "Assymetric grid exact match left", []string{"AAAAA", "XABCD", "AMBCD", "ABACD", "ABCSD"}, 1)
 }
 
 func XmasMatchesCase(t *testing.T, descrption string, input []string, expected int) {
