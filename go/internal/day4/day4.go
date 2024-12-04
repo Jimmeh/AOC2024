@@ -1,6 +1,10 @@
 package day4
 
-import "github.com/Jimmeh/AOC2024/go/internal/file_reading"
+import (
+	"fmt"
+
+	"github.com/Jimmeh/AOC2024/go/internal/file_reading"
+)
 
 func CreateWordSearcher(reader file_reading.LineReader) (wordSearcher, error) {
 	lines, err := reader.Lines()
@@ -22,13 +26,16 @@ func (w wordSearcher) Find(word string) int {
 	result := 0
 	for _, sequence := range getSequences(w.grid) {
 		result += forwardMatches(sequence, word)
-		result += 
+		result += backwardMatches(sequence, word)
+		fmt.Printf(reverse(word))
+		fmt.Printf(word)
+		fmt.Println()
 	}
 	return result
 }
 
 func backwardMatches(sequence []byte, word string) int {
-	return forwardMatches(sequence, reverse(word))	
+	return forwardMatches(sequence, reverse(word))
 }
 
 func forwardMatches(sequence []byte, word string) int {
@@ -44,6 +51,8 @@ func forwardMatches(sequence []byte, word string) int {
 				matched = 0
 				result++
 			}
+		} else if char == word[0] {
+			matched = 1
 		} else {
 			matched = 0
 		}

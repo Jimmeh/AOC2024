@@ -10,6 +10,7 @@ import (
 func TestHorizontalMatches(t *testing.T) {
 	XmasMatchesCase(t, "Horizontal: No matches", []string{"ABCDE"}, 0)
 	XmasMatchesCase(t, "Horizontal: Exact match", []string{"XMAS"}, 1)
+	XmasMatchesCase(t, "Horizontal: Exact match, preceding X", []string{"XXMAS"}, 1)
 	XmasMatchesCase(t, "Horizontal: Exact match twice", []string{"XMASXMAS"}, 2)
 	XmasMatchesCase(t, "Horizontal: Match amongst non/near matches", []string{"XMAHFKAJFXMASXMSSUHGFS"}, 1)
 	XmasMatchesCase(t, "Horizontal: Exact match (backwards)", []string{"SAMX"}, 1)
