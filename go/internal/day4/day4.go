@@ -1,8 +1,6 @@
 package day4
 
 import (
-	"fmt"
-
 	"github.com/Jimmeh/AOC2024/go/internal/file_reading"
 )
 
@@ -27,9 +25,6 @@ func (w wordSearcher) Find(word string) int {
 	for _, sequence := range getSequences(w.grid) {
 		result += forwardMatches(sequence, word)
 		result += backwardMatches(sequence, word)
-		fmt.Printf(reverse(word))
-		fmt.Printf(word)
-		fmt.Println()
 	}
 	return result
 }
@@ -62,7 +57,20 @@ func forwardMatches(sequence []byte, word string) int {
 
 func getSequences(grid [][]byte) [][]byte {
 	rows := grid
-	return rows
+	columns := getColumns(grid)
+	return append(rows, columns...)
+}
+
+func getColumns(grid [][]byte) [][]byte {
+	cols := [][]byte{}
+	for i := range grid[0] {
+		col := []byte{}
+		for _, row := range grid {
+			col = append(col, row[i])
+		}
+		cols = append(cols, col)
+	}
+	return cols
 }
 
 func reverse(s string) string {

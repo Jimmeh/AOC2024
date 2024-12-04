@@ -17,6 +17,10 @@ func TestHorizontalMatches(t *testing.T) {
 	XmasMatchesCase(t, "Horizontal: Forward and backward match", []string{"SAMXXMAS"}, 2)
 }
 
+func TestColumnMatches(t *testing.T) {
+	XmasMatchesCase(t, "Vertical Exact match", []string{"X", "M", "A", "S"}, 1)
+}
+
 func XmasMatchesCase(t *testing.T, descrption string, input []string, expected int) {
 	reader := helpers.TestLineReader{Data: input}
 	searcher, _ := day4.CreateWordSearcher(reader)
