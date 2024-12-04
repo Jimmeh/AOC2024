@@ -9,13 +9,14 @@ import (
 
 func TestHorizontalMatches(t *testing.T) {
 	XmasMatchesCase(t, "Horizontal: No matches", []string{"ABCDE"}, 0)
+	XmasMatchesCase(t, "Horizontal: Exact match", []string{"XMAS"}, 1)
 }
 
 func XmasMatchesCase(t *testing.T, descrption string, input []string, expected int) {
 	reader := helpers.TestLineReader{Data: input}
 	searcher, _ := day4.CreateWordSearcher(reader)
 	actual := searcher.Find("XMAS")
-	if actual != 0 {
+	if actual != expected {
 		t.Errorf("%s: expected %d, got %d", descrption, expected, actual)
 	}
 }
