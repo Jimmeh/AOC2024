@@ -28,15 +28,15 @@ func (w wordSearcher) FindWords() int {
 				continue
 			}
 			required := []byte{'M', 'A', 'S'}
-			count += w.MatchHorizontally(row, col, required)
-			count += w.MatchVertically(row, col, required)
-			count += w.MatchDiagonally(row, col, required)
+			count += w.matchHorizontally(row, col, required)
+			count += w.matchVertically(row, col, required)
+			count += w.matchDiagonally(row, col, required)
 		}
 	}
 	return count
 }
 
-func (w wordSearcher) MatchHorizontally(row, col int, letters []byte) int {
+func (w wordSearcher) matchHorizontally(row, col int, letters []byte) int {
 	possible := 2
 	for i, letter := range letters {
 		if !w.LetterEquals(row, col+(i+1), letter) {
@@ -53,7 +53,7 @@ func (w wordSearcher) MatchHorizontally(row, col int, letters []byte) int {
 	return possible
 }
 
-func (w wordSearcher) MatchVertically(row, col int, letters []byte) int {
+func (w wordSearcher) matchVertically(row, col int, letters []byte) int {
 	possible := 2
 	for i, letter := range letters {
 		if !w.LetterEquals(row+(i+1), col, letter) {
@@ -70,7 +70,7 @@ func (w wordSearcher) MatchVertically(row, col int, letters []byte) int {
 	return possible
 }
 
-func (w wordSearcher) MatchDiagonally(row, col int, letters []byte) int {
+func (w wordSearcher) matchDiagonally(row, col int, letters []byte) int {
 	possible := 4
 	for i, letter := range letters {
 		if !w.LetterEquals(row+(i+1), col+(i+1), letter) {
