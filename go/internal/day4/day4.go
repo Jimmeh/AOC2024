@@ -22,6 +22,45 @@ type wordSearcher struct {
 	grid [][]byte
 }
 
+func (w wordSearcher) FindWords() int {
+	count := 0
+	for row := range w.grid {
+		for col, letter := range w.grid[row] {
+			if letter != 'X' {
+				continue
+			}
+			required := []byte{'M', 'A', 'S'}
+			count += w.MatchHorizontally(row, col, required)
+		}
+	}
+	return count
+}
+
+func (w wordSearcher) MatchHorizontally(row, col int, letters []byte) int {
+	possible := 2
+	for i, letter := range letters {
+		if !w.LetterEquals(row, col+(i+1), letter) {
+			possible--
+			break
+		}
+	}
+	for i, letter := range letters {
+		if !w.LetterEquals(row, col-(i+1), letter) {
+			possible--
+			break
+		}
+	}
+	return possible
+}
+
+func (w wordSearcher) LetterEquals(i, j int, letter byte) bool {
+	return i >= 0 &&
+		i < len(w.grid) &&
+		j >= 0 &&
+		j < len(w.grid[i]) &&
+		w.grid[i][j] == letter
+}
+
 func (w wordSearcher) Find(word string) int {
 	result := 0
 	for _, sequence := range getSequences(w.grid) {
