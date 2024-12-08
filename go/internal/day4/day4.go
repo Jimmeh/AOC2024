@@ -31,6 +31,7 @@ func (w wordSearcher) FindWords() int {
 			}
 			required := []byte{'M', 'A', 'S'}
 			count += w.MatchHorizontally(row, col, required)
+			count += w.MatchVertically(row, col, required)
 		}
 	}
 	return count
@@ -46,6 +47,23 @@ func (w wordSearcher) MatchHorizontally(row, col int, letters []byte) int {
 	}
 	for i, letter := range letters {
 		if !w.LetterEquals(row, col-(i+1), letter) {
+			possible--
+			break
+		}
+	}
+	return possible
+}
+
+func (w wordSearcher) MatchVertically(row, col int, letters []byte) int {
+	possible := 2
+	for i, letter := range letters {
+		if !w.LetterEquals(row+(i+1), col, letter) {
+			possible--
+			break
+		}
+	}
+	for i, letter := range letters {
+		if !w.LetterEquals(row-(i+1), col, letter) {
 			possible--
 			break
 		}
