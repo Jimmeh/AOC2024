@@ -16,6 +16,10 @@ func CreateWordSearcher(reader file_reading.LineReader) (wordSearcher, error) {
 	return wordSearcher{asByteArrays}, nil
 }
 
+type directionModifier struct {
+	vertical, horizontal int
+}
+
 type wordSearcher struct {
 	grid [][]byte
 }
@@ -28,78 +32,36 @@ func (w wordSearcher) FindWords() int {
 				continue
 			}
 			required := []byte{'M', 'A', 'S'}
-			count += w.matchHorizontally(row, col, required)
-			count += w.matchVertically(row, col, required)
-			count += w.matchDiagonally(row, col, required)
+			directions := []directionModifier{
+				{0, 1},
+				{0, -1},
+				{1, 0},
+				{-1, 0},
+				{1, 1},
+				{-1, -1},
+				{1, -1},
+				{-1, 1},
+			}
+			count += w.matchDirections(row, col, required, directions)
 		}
 	}
 	return count
 }
 
-func (w wordSearcher) matchHorizontally(row, col int, letters []byte) int {
-	possible := 2
-	for i, letter := range letters {
-		if !w.LetterEquals(row, col+(i+1), letter) {
-			possible--
-			break
-		}
-	}
-	for i, letter := range letters {
-		if !w.LetterEquals(row, col-(i+1), letter) {
-			possible--
-			break
+func (w wordSearcher) matchDirections(row, col int, letters []byte, directions []directionModifier) int {
+	possible := len(directions)
+	for _, dir := range directions {
+		for i, letter := range letters {
+			if !w.letterEquals(row+((i+1)*dir.vertical), col+((i+1)*dir.horizontal), letter) {
+				possible--
+				break
+			}
 		}
 	}
 	return possible
 }
 
-func (w wordSearcher) matchVertically(row, col int, letters []byte) int {
-	possible := 2
-	for i, letter := range letters {
-		if !w.LetterEquals(row+(i+1), col, letter) {
-			possible--
-			break
-		}
-	}
-	for i, letter := range letters {
-		if !w.LetterEquals(row-(i+1), col, letter) {
-			possible--
-			break
-		}
-	}
-	return possible
-}
-
-func (w wordSearcher) matchDiagonally(row, col int, letters []byte) int {
-	possible := 4
-	for i, letter := range letters {
-		if !w.LetterEquals(row+(i+1), col+(i+1), letter) {
-			possible--
-			break
-		}
-	}
-	for i, letter := range letters {
-		if !w.LetterEquals(row-(i+1), col-(i+1), letter) {
-			possible--
-			break
-		}
-	}
-	for i, letter := range letters {
-		if !w.LetterEquals(row-(i+1), col+(i+1), letter) {
-			possible--
-			break
-		}
-	}
-	for i, letter := range letters {
-		if !w.LetterEquals(row+(i+1), col-(i+1), letter) {
-			possible--
-			break
-		}
-	}
-	return possible
-}
-
-func (w wordSearcher) LetterEquals(i, j int, letter byte) bool {
+func (w wordSearcher) letterEquals(i, j int, letter byte) bool {
 	return i >= 0 &&
 		i < len(w.grid) &&
 		j >= 0 &&
