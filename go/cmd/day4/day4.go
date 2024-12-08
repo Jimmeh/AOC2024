@@ -17,7 +17,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error: %s", err)
 	}
-	total := searcher.Find("XMAS")
+	total := searcher.FindWords()
 	fmt.Printf("Total words found is %d", total)
 	fmt.Println()
 }

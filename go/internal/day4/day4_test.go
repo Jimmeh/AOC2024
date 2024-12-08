@@ -23,24 +23,15 @@ func TestColumnMatches(t *testing.T) {
 }
 
 func TestDiagMatches(t *testing.T) {
-	XmasMatchesCase(t, "Square grid exact match", []string{"XABC", "AMBC", "ABAC", "ABCS"}, 1)
-	XmasMatchesCase(t, "Assymetric grid exact match right", []string{"AXABC", "AAMBC", "AABAC", "AABCS"}, 1)
-	XmasMatchesCase(t, "Assymetric grid exact match left", []string{"AAAAA", "XABCD", "AMBCD", "ABACD", "ABCSD"}, 1)
+	MatchXmasCase(t, "Square grid exact match", []string{"XABC", "AMBC", "ABAC", "ABCS"}, 1)
+	MatchXmasCase(t, "Assymetric grid exact match right", []string{"AXABC", "AAMBC", "AABAC", "AABCS"}, 1)
+	MatchXmasCase(t, "Assymetric grid exact match left", []string{"AAAAA", "XABCD", "AMBCD", "ABACD", "ABCSD"}, 1)
 }
 
 func MatchXmasCase(t *testing.T, descrption string, input []string, expected int) {
 	reader := helpers.TestLineReader{Data: input}
 	searcher, _ := day4.CreateWordSearcher(reader)
 	actual := searcher.FindWords()
-	if actual != expected {
-		t.Errorf("%s: expected %d, got %d", descrption, expected, actual)
-	}
-}
-
-func XmasMatchesCase(t *testing.T, descrption string, input []string, expected int) {
-	reader := helpers.TestLineReader{Data: input}
-	searcher, _ := day4.CreateWordSearcher(reader)
-	actual := searcher.Find("XMAS")
 	if actual != expected {
 		t.Errorf("%s: expected %d, got %d", descrption, expected, actual)
 	}
