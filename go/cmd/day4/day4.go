@@ -17,7 +17,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error: %s", err)
 	}
-	total := searcher.FindWords()
-	fmt.Printf("Total words found is %d", total)
+	totalXmas := searcher.FindXmas()
+	totalCrosses := searcher.FindCrosses()
+
+	fmt.Printf("Total xmas found is %d", totalXmas)
+	fmt.Println()
+
+	fmt.Printf("Total X-Mas found is %d", totalCrosses)
 	fmt.Println()
 }

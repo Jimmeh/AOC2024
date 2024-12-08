@@ -24,7 +24,7 @@ type wordSearcher struct {
 	grid [][]byte
 }
 
-func (w wordSearcher) FindWords() int {
+func (w wordSearcher) FindXmas() int {
 	count := 0
 	for row := range w.grid {
 		for col, letter := range w.grid[row] {
@@ -46,6 +46,27 @@ func (w wordSearcher) FindWords() int {
 		}
 	}
 	return count
+}
+
+func (w wordSearcher) FindCrosses() int {
+	count := 0
+	for row := range w.grid {
+		for col, letter := range w.grid[row] {
+			if letter != 'A' {
+				continue
+			}
+			if w.crossDiagonalsCorrect(row, col) {
+				count++
+			}
+		}
+	}
+	return count
+}
+
+func (w wordSearcher) crossDiagonalsCorrect(i, j int) bool {
+	leftDiag := (w.letterEquals(i+1, j+1, 'S') && w.letterEquals(i-1, j-1, 'M')) || (w.letterEquals(i+1, j+1, 'M') && w.letterEquals(i-1, j-1, 'S'))
+	rightDiag := (w.letterEquals(i-1, j+1, 'S') && w.letterEquals(i+1, j-1, 'M')) || (w.letterEquals(i-1, j+1, 'M') && w.letterEquals(i+1, j-1, 'S'))
+	return leftDiag && rightDiag
 }
 
 func (w wordSearcher) matchDirections(row, col int, letters []byte, directions []directionModifier) int {

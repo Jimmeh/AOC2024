@@ -28,10 +28,22 @@ func TestDiagMatches(t *testing.T) {
 	MatchXmasCase(t, "Assymetric grid exact match left", []string{"AAAAA", "XABCD", "AMBCD", "ABACD", "ABCSD"}, 1)
 }
 
+func TestCrossMas(t *testing.T) {
+	input := []string{"MXS", "XAX", "MXS"}
+
+	reader := helpers.TestLineReader{Data: input}
+	searcher, _ := day4.CreateWordSearcher(reader)
+	actual := searcher.FindCrosses()
+	expected := 1
+	if actual != expected {
+		t.Errorf("%s: expected %d, got %d", "X-Mas", expected, actual)
+	}
+}
+
 func MatchXmasCase(t *testing.T, descrption string, input []string, expected int) {
 	reader := helpers.TestLineReader{Data: input}
 	searcher, _ := day4.CreateWordSearcher(reader)
-	actual := searcher.FindWords()
+	actual := searcher.FindXmas()
 	if actual != expected {
 		t.Errorf("%s: expected %d, got %d", descrption, expected, actual)
 	}
