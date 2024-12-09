@@ -42,7 +42,20 @@ type ruleChecker struct {
 }
 
 func (c ruleChecker) MiddleNumberSum() int {
-	return 3
+	result := 0
+	for _, update := range c.updates {
+		failed := false
+		for _, rule := range c.rules {
+			if !rule.Passes(update) {
+				failed = true
+				break
+			}
+		}
+		if !failed {
+			result += update[len(update)/2]
+		}
+	}
+	return result
 }
 
 func CreateRule(input string) rule {

@@ -18,6 +18,8 @@ func TestIndividualRule(t *testing.T) {
 }
 func TestMultipleRules(t *testing.T) {
 	MultiRuleCase(t, "Empty update passes rule", []string{"1|2", "", "3"}, 3)
+	MultiRuleCase(t, "Empty update passes rule", []string{"1|2", "", "1,2,3"}, 2)
+	MultiRuleCase(t, "Empty update passes rule", []string{"1|2", "3|4", "", "1,2,3,4,5,6,7"}, 4)
 }
 
 func IndividualRuleCase(t *testing.T, desc, input string, update []int, expected bool) {
